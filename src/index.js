@@ -81,7 +81,26 @@ function checksTodoExists(request, response, next) {
 }
 
 function findUserById(request, response, next) {
-  // Complete aqui
+  const { id } = request.params;
+
+  const findUserById = users.find(user => user.id === id);
+
+
+  if(!findUserById) {
+    return response.status(404).json({ error: 'User already exists' });
+  }
+
+  const { id: userId, name, pro, todos, username } = findUserById;
+
+  request.user = {
+    id: userId,
+    name,
+    pro,
+    todos,
+    username
+  };
+
+  return next()
 }
 
 app.post('/users', (request, response) => {
