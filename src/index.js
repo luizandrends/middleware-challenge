@@ -30,7 +30,15 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  
+  const { user } = request;
+  const { pro, todos } = user;
+
+  if (pro === false && todos.length >= 10) {
+    return response.status(403).json({ error: 'You are not able to register a new todo' });
+  }
+
+  return next();
 }
 
 function checksTodoExists(request, response, next) {
